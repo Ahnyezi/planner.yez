@@ -1,9 +1,9 @@
 package com.yez.planner.repository;
 
-import com.yez.planner.vo.Plan;
-import com.yez.planner.vo.PlanPK;
+import com.yez.planner.vo.PlanMaster;
+import com.yez.planner.vo.PlanMasterPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PlanRepository extends JpaRepository<Plan, PlanPK> {
+public interface PlanRepository extends JpaRepository<PlanMaster, PlanMasterPK> {
 
 }

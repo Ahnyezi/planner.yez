@@ -14,31 +14,32 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "TB_MST_PLANS")
+@Table(name = "TB_PLN_TODOS")
 @Entity
-@IdClass(PlanPK.class)
-public class Plan {
+@IdClass(PlanTodoPK.class)
+public class PlanTodo {
 
     @Id
-    @Column(name = "USER_ID")
+    @Column(name = "USER_ID", length = 20)
     @NonNull
-    String userId;
+    private String userId;
     @Id
-    @Column(name = "DATE")
+    @Column(name = "DATE", length = 8)
     @NonNull
-    String date;
-    @Column(name = "WEATHER")
-    String weather;
+    private String date;
+    @Id
+    @Column(name = "SEQ")
+    private int seq;
+    @Column(name = "CONTENT", length = 255)
+    @NonNull
+    private String content;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATE_DT")
-    Date createDt;
+    private Date createDt;
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "MODIFY_DT")
-    Date modifyDt;
+    private Date modifyDt;
 
-    public void modifyWeather(String weather) {
-        this.weather = weather;
-    }
 }

@@ -1,8 +1,8 @@
 package com.yez.planner.repository;
 
 import com.yez.planner.enums.Weather;
-import com.yez.planner.vo.Plan;
-import com.yez.planner.vo.PlanPK;
+import com.yez.planner.vo.PlanMaster;
+import com.yez.planner.vo.PlanMasterPK;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class PlanRepositoryTest {
+class PlanMasterRepositoryTest {
 
     @Autowired
     PlanRepository planRepository;
@@ -29,17 +29,17 @@ class PlanRepositoryTest {
             String userId = RandomString.make(20);
             String date = "20230822";
             String weather = Weather.CLOUDY.name();
-            Plan plan = Plan.builder().userId(userId).date(date).weather(weather).build();
-            planRepository.save(plan);
+            PlanMaster planMaster = PlanMaster.builder().userId(userId).date(date).weather(weather).build();
+            planRepository.save(planMaster);
 
             // when
-            planRepository.findById(new PlanPK(userId, date)).ifPresent(searchedPlan -> {
+            planRepository.findById(new PlanMasterPK(userId, date)).ifPresent(searchedPlanMaster -> {
                 // then
-                assertEquals(plan.getUserId(), searchedPlan.getUserId());
-                assertEquals(plan.getDate(), searchedPlan.getDate());
-                assertEquals(plan.getWeather(), searchedPlan.getWeather());
-                assertNotNull(searchedPlan.getCreateDt());
-                assertNull(plan.getModifyDt());
+                assertEquals(planMaster.getUserId(), searchedPlanMaster.getUserId());
+                assertEquals(planMaster.getDate(), searchedPlanMaster.getDate());
+                assertEquals(planMaster.getWeather(), searchedPlanMaster.getWeather());
+                assertNotNull(searchedPlanMaster.getCreateDt());
+                assertNull(planMaster.getModifyDt());
             });
         }
 
@@ -50,16 +50,16 @@ class PlanRepositoryTest {
             // given
             String userId = RandomString.make(20);
             String date = "20230822";
-            Plan plan = Plan.builder().userId(userId).date(date).build();
-            planRepository.save(plan);
+            PlanMaster planMaster = PlanMaster.builder().userId(userId).date(date).build();
+            planRepository.save(planMaster);
 
             // when
-            planRepository.findById(new PlanPK(userId, date)).ifPresent(searchedPlan -> {
+            planRepository.findById(new PlanMasterPK(userId, date)).ifPresent(searchedPlanMaster -> {
                 // then
-                assertEquals(plan.getUserId(), searchedPlan.getUserId());
-                assertEquals(plan.getDate(), searchedPlan.getDate());
-                assertNotNull(searchedPlan.getCreateDt());
-                assertNull(plan.getModifyDt());
+                assertEquals(planMaster.getUserId(), searchedPlanMaster.getUserId());
+                assertEquals(planMaster.getDate(), searchedPlanMaster.getDate());
+                assertNotNull(searchedPlanMaster.getCreateDt());
+                assertNull(planMaster.getModifyDt());
             });
         }
 
@@ -70,7 +70,7 @@ class PlanRepositoryTest {
             // given
             String userId = RandomString.make(20);
             // when then
-            assertThrows(NullPointerException.class, () -> Plan.builder().userId(userId).build());
+            assertThrows(NullPointerException.class, () -> PlanMaster.builder().userId(userId).build());
         }
 
         @Test
@@ -80,7 +80,7 @@ class PlanRepositoryTest {
             // given
             String date = "20230822";
             // when then
-            assertThrows(NullPointerException.class, () -> Plan.builder().date(date).build());
+            assertThrows(NullPointerException.class, () -> PlanMaster.builder().date(date).build());
         }
     }
 
@@ -97,23 +97,23 @@ class PlanRepositoryTest {
             String userId = RandomString.make(20);
             String date = "20230822";
             String weather = Weather.CLOUDY.name();
-            Plan plan = Plan.builder().userId(userId).date(date).weather(weather).build();
-            planRepository.save(plan);
+            PlanMaster planMaster = PlanMaster.builder().userId(userId).date(date).weather(weather).build();
+            planRepository.save(planMaster);
 
             // when
             String newWeather = Weather.SUNNY.name();
-            planRepository.findById(new PlanPK(userId, date)).ifPresent(searchedPlan -> {
-                searchedPlan.modifyWeather(newWeather);
-                planRepository.save(searchedPlan);
+            planRepository.findById(new PlanMasterPK(userId, date)).ifPresent(searchedPlanMaster -> {
+                searchedPlanMaster.modifyWeather(newWeather);
+                planRepository.save(searchedPlanMaster);
             });
 
             // then
-            planRepository.findById(new PlanPK(userId, date)).ifPresent(searchedPlan -> {
-                assertEquals(plan.getUserId(), searchedPlan.getUserId());
-                assertEquals(plan.getDate(), searchedPlan.getDate());
-                assertNotEquals(weather, searchedPlan.getWeather());
-                assertEquals(newWeather, searchedPlan.getWeather());
-                assertNotNull(searchedPlan.getModifyDt());
+            planRepository.findById(new PlanMasterPK(userId, date)).ifPresent(searchedPlanMaster -> {
+                assertEquals(planMaster.getUserId(), searchedPlanMaster.getUserId());
+                assertEquals(planMaster.getDate(), searchedPlanMaster.getDate());
+                assertNotEquals(weather, searchedPlanMaster.getWeather());
+                assertEquals(newWeather, searchedPlanMaster.getWeather());
+                assertNotNull(searchedPlanMaster.getModifyDt());
             });
         }
     }
@@ -131,14 +131,14 @@ class PlanRepositoryTest {
             String userId = RandomString.make(20);
             String date = "20230822";
             String weather = Weather.CLOUDY.name();
-            Plan plan = Plan.builder().userId(userId).date(date).weather(weather).build();
-            planRepository.save(plan);
+            PlanMaster planMaster = PlanMaster.builder().userId(userId).date(date).weather(weather).build();
+            planRepository.save(planMaster);
 
             // when
-            planRepository.findById(new PlanPK(userId, date)).ifPresent(searchedPlan -> planRepository.delete(searchedPlan));
+            planRepository.findById(new PlanMasterPK(userId, date)).ifPresent(searchedPlanMaster -> planRepository.delete(searchedPlanMaster));
 
             // then
-            assertFalse(planRepository.findById(new PlanPK(userId, date)).isPresent());
+            assertFalse(planRepository.findById(new PlanMasterPK(userId, date)).isPresent());
         }
     }
 }
